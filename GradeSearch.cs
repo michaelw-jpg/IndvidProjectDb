@@ -33,7 +33,7 @@ namespace Lab3
             var gradesLastMonth = context.Grades
                                             .Where(g => g.GradeDate >= DateOnly.FromDateTime(firstDayOfLastMonth) &&
                                            g.GradeDate <= DateOnly.FromDateTime(lastDayOfLastMonth))
-                                            .Select(g => new {
+                                            .Select(g => new { //we skip join by accessing the right student through FKstudent property
                                                 sFirstName = g.FkStudent.FirstName,
                                                 sLastName = g.FkStudent.LastName,
                                                 courseName = g.FkCourse.Subjects,

@@ -115,7 +115,7 @@ namespace Lab3
             var students = context.Students
                                    .Where(s => s.FkClass.ClassName == whichClass)
                                    .OrderBy(s => s.FirstName)
-                                   .Select(s => new { s.FirstName, s.LastName, s.Personnummer, Classname = s.FkClass.ClassName })
+                                   .Select(s => new { s.FirstName, s.LastName, s.Personnummer, Classname = s.FkClass.ClassName }) //instead of using join we can acces class through Student.FkClass property
                                    .ToList();
             Console.WriteLine("studenter:");
 
@@ -126,8 +126,8 @@ namespace Lab3
         }
         public static void Employees(labb2Context context)
         {
-            Console.WriteLine("Skriv ut alla anställda");
-            Console.WriteLine("Skriv ut endast lärare");
+            Console.WriteLine("\n[1]Skriv ut alla anställda");
+            Console.WriteLine("[2]Skriv ut endast lärare");
             int.TryParse(Console.ReadLine(), out int ans2);
             if (ans2 == 1)
             {
