@@ -9,6 +9,25 @@ namespace Lab3
 {
     public class GradeSearch
     {
+        public static void ActiveCourses(labb2Context context)
+        {
+            var activeCourses = context.ActiveEnrollments
+                .Where(a => a.CourseEndDate > DateOnly.FromDateTime(DateTime.Now))
+                .GroupBy(a => a.FkCourse)
+                .Select(group => new
+                {
+                    Subject = group.Key.Subjects,
+                    numberOfStudents = group.Count()
+
+                }).ToList();
+            Console.WriteLine();
+            Console.WriteLine("Aktiva Kurser");
+            foreach (var activecourse in activeCourses)
+            {
+                Console.WriteLine($"Kurs: {activecourse.Subject} , Antal elever: {activecourse.numberOfStudents}");
+            }
+            Console.ReadLine();
+        }
         public  static void AverageAll(labb2Context context)
         {
             var grades = context.Grades.GroupBy(g => g.FkCourse)
@@ -37,12 +56,13 @@ namespace Lab3
                                                 sFirstName = g.FkStudent.FirstName,
                                                 sLastName = g.FkStudent.LastName,
                                                 courseName = g.FkCourse.Subjects,
-                                                g.Grade1
+                                                g.Grade1,
+                                                g.GradeDate
                                             })
                                             .ToList();
             foreach (var grade in gradesLastMonth)
             {
-                Console.WriteLine($"{grade.sFirstName} {grade.sLastName}, {grade.courseName}, {grade.Grade1}");
+                Console.WriteLine($"{grade.sFirstName} {grade.sLastName}, {grade.courseName}, {grade.Grade1}, {grade.GradeDate}");
             }
         }
         
